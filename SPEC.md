@@ -8,7 +8,7 @@
 | 対象業務 | ロボット搬送システム運用 |
 | 公開URL | https://yoshinabe.github.io/imstest/ |
 | リポジトリ | https://github.com/YoshiNabe/imstest |
-| 最終更新 | 2026-04-21 |
+| 最終更新 | 2026-04-22 |
 
 ---
 
@@ -29,9 +29,11 @@ imstest/
 ```
 ユーザー入力
     ↓
-JavaScript でメール本文を整形
+JavaScript でバリデーション・メール本文を整形
     ↓
-SSGform (https://ssgform.com/s/9GKYXFlKSxRq) へ POST
+報告者に対応する SSGform URL を動的に決定
+    ↓
+form.submit() で SSGform へ POST
     ↓
 SSGform がメール送信
     ↓
@@ -121,7 +123,7 @@ Backlog メール受信 → インシデント課題として自動登録
 | ボタン | 動作 |
 |--------|------|
 | 書き出し保存 | フォーム内容を整形したテキストファイル（.txt）をダウンロード、かつ localStorage に下書き保存 |
-| 報告する | 入力検証 → メール本文を整形 → SSGform へ POST 送信 |
+| 送信 | 入力検証 → メール本文を整形 → 報告者に対応する SSGform URL へ POST 送信 |
 
 ### 下書き復元
 
@@ -132,12 +134,50 @@ Backlog メール受信 → インシデント課題として自動登録
 
 ## 4. SSGform 送信仕様
 
+### 報告者別 送信先URL
+
+| 報告者 | SSGform URL |
+|--------|------------|
+| Rapidus A/W | https://ssgform.com/s/9GKYXFlKSxRq |
+| Rapidus DJK | https://ssgform.com/s/gqOCJt3qyJW1 |
+| TOYOTA | https://ssgform.com/s/8XFLqlKvsVU8 |
+| KDDI | https://ssgform.com/s/yPdQ5CuZUick |
+| GIGAPHOTON | https://ssgform.com/s/O7VSiCcnv9dW |
+| 中外製薬 | https://ssgform.com/s/XJKMdkFWQqwc |
+
+送信先URLは JavaScript の `SSGFORM_URLS` オブジェクトで管理しており、送信ボタン押下時に報告者の選択値をキーとして URL を決定し `form.submit()` で送信する。
+
 ### POSTフィールド
 
-| フィールド名（name属性） | 内容 |
-|--------------------------|------|
-| `subject` | メール件名（Backlogの課題タイトルになる） |
-| `message` | メール本文（整形済みインシデントレポート） |
+送信時に `name` 属性を持つ全フィールドが POST される（合計25フィールド）。
+
+| フィールド名 | 内容 |
+|-------------|------|
+| `userName` | 報告者 |
+| `occurrenceTime` | 発生日時 |
+| `reportTime` | 報告日時 |
+| `location` | 発生場所 |
+| `frequency` | 発生頻度 |
+| `model` | 機種 |
+| `unitNumber` | 号機 |
+| `errorCode` | エラーコード / 種別 |
+| `priority` | 優先度（hidden、JSがセット） |
+| `impactScope` | 影響範囲 |
+| `operationStatus` | 運用継続可否 |
+| `deadline` | 対応期限 |
+| `when5w` | When |
+| `where5w` | Where |
+| `who5w` | Who |
+| `what5w` | What |
+| `why5w` | Why |
+| `detail` | 事象の詳細 |
+| `investigation` | 調査内容 |
+| `reproducibility` | 再現性 |
+| `knownError` | 既知エラーとの一致 |
+| `actionRequest` | 依頼内容・アクション |
+| `notes` | その他・特記事項 |
+| `subject` | メール件名（hidden、JSが生成） |
+| `message` | メール本文・整形済み全文（hidden、JSが生成） |
 
 ### メール件名フォーマット
 
@@ -147,10 +187,10 @@ Backlog メール受信 → インシデント課題として自動登録
 
 例：
 ```
-[インシデント報告] WILL-FA #03 - P1 (2026-04-21 09:32) [Rapidus A/W]
+[インシデント報告] WILL-FA #03 - P1 (2026-04-22 09:32) [Rapidus A/W]
 ```
 
-### メール本文フォーマット
+### メール本文フォーマット（`message` フィールド）
 
 ```
 ■ インシデント報告レコード
@@ -211,16 +251,18 @@ Why（なぜ）　 ：{Why}
 
 | チェック内容 | タイミング | 動作 |
 |-------------|-----------|------|
-| 必須項目未入力（HTML5 required） | 送信ボタン押下 | ブラウザ標準バリデーション |
-| 優先度未選択 | 送信ボタン押下 | JavaScript でトースト通知を表示し送信中断 |
+| 報告者未選択 | 送信ボタン押下 | トースト通知を表示し送信中断 |
+| 優先度未選択 | 送信ボタン押下 | トースト通知を表示し送信中断 |
+| 必須項目未入力 | 送信ボタン押下 | `form.checkValidity()` → `reportValidity()` でブラウザ標準表示 |
 
 ---
 
 ## 6. 変更・拡張時の注意点
 
-- **報告者の追加・変更:** `index.html` 内の `<select id="userName">` の `<option>` を編集する
+- **報告者の追加・変更:** `index.html` 内の `<select id="userName">` の `<option>` と `SSGFORM_URLS` オブジェクトを両方編集する
 - **機種の追加・変更:** `<select id="model">` の `<option>` を編集する
-- **SSGform送信先変更:** `<form action="...">` の URL を変更する
+- **SSGform送信先変更:** `SSGFORM_URLS` オブジェクトの該当URLを変更する
+- **デプロイ確認:** ページ最下部のフッターにバージョン日付（`ver. YYYY-MM-DD`）を表示。コード変更時は日付を更新する
 - **GitHub Pages 反映:** `main` ブランチへプッシュ後、数分で自動反映される
 
 ---
@@ -232,10 +274,24 @@ Why（なぜ）　 ：{Why}
 git clone https://github.com/YoshiNabe/imstest.git
 cd imstest
 
-# 編集後にプッシュ
+# 編集後にプッシュ（フッターのバージョン日付も更新すること）
 git add index.html
 git commit -m "変更内容のコメント"
 git push origin main
 ```
 
 GitHub Pages は `main` ブランチを監視しており、プッシュ後数分で https://yoshinabe.github.io/imstest/ に反映される。
+
+---
+
+## 8. 変更履歴
+
+| 日付 | 内容 |
+|------|------|
+| 2026-04-21 | 初版リリース。フォーム実装・SSGform連携・GitHub Pages デプロイ |
+| 2026-04-21 | バグ修正：全フォームフィールドに `name` 属性を追加（POSTデータ欠落の修正） |
+| 2026-04-21 | 送信ボタンのラベルを「報告する」→「送信」に変更 |
+| 2026-04-21 | 報告者に応じて SSGform 送信先URL を動的切り替え |
+| 2026-04-21 | バグ修正：405エラー対応。`form.submit()` 方式に変更 |
+| 2026-04-21 | フッターにデプロイバージョン日付を追加 |
+| 2026-04-22 | SPEC.md 更新 |
