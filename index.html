@@ -224,7 +224,7 @@
     <p>Incident Report Record — ロボット搬送システム運用</p>
   </div>
 
-  <form id="incidentForm" action="https://ssgform.com/s/9GKYXFlKSxRq" method="POST" onsubmit="return prepareSubmit(event)">
+  <form id="incidentForm" action="" method="POST" onsubmit="return prepareSubmit(event)">
 
     <!-- SSGform hidden fields -->
     <input type="hidden" name="subject" id="hiddenSubject">
@@ -460,6 +460,15 @@
 <div id="toast"></div>
 
 <script>
+  const SSGFORM_URLS = {
+    'GIGAPHOTON':   'https://ssgform.com/s/O7VSiCcnv9dW',
+    'KDDI':         'https://ssgform.com/s/yPdQ5CuZUick',
+    'Rapidus A/W':  'https://ssgform.com/s/9GKYXFlKSxRq',
+    'Rapidus DJK':  'https://ssgform.com/s/gqOCJt3qyJW1',
+    'TOYOTA':       'https://ssgform.com/s/8XFLqlKvsVU8',
+    '中外製薬':      'https://ssgform.com/s/XJKMdkFWQqwc',
+  };
+
   const FIELDS = [
     'userName','occurrenceTime','reportTime','location','frequency',
     'model','unitNumber','errorCode','priority','impactScope','operationStatus',
@@ -547,6 +556,15 @@ ${val('notes')}
   }
 
   function prepareSubmit(e) {
+    const user = document.getElementById('userName').value;
+    const url  = SSGFORM_URLS[user];
+    if (!url) {
+      e.preventDefault();
+      showToast('報告者を選択してください。');
+      return false;
+    }
+    document.getElementById('incidentForm').action = url;
+
     if (!document.getElementById('priority').value) {
       e.preventDefault();
       showToast('優先度を選択してください。');
