@@ -556,31 +556,37 @@ ${val('notes')}
   }
 
   function prepareSubmit(e) {
+    e.preventDefault();
+
     const user = document.getElementById('userName').value;
     const url  = SSGFORM_URLS[user];
     if (!url) {
-      e.preventDefault();
       showToast('報告者を選択してください。');
-      return false;
+      return;
     }
-    document.getElementById('incidentForm').action = url;
 
     if (!document.getElementById('priority').value) {
-      e.preventDefault();
       showToast('優先度を選択してください。');
-      return false;
+      return;
     }
 
-    const model   = val('model');
-    const unit    = val('unitNumber');
-    const prio    = val('priority');
-    const dt      = fmtDt(document.getElementById('occurrenceTime').value);
-    const user    = val('userName');
+    const form = document.getElementById('incidentForm');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const model = val('model');
+    const unit  = val('unitNumber');
+    const prio  = val('priority');
+    const dt    = fmtDt(document.getElementById('occurrenceTime').value);
 
     document.getElementById('hiddenSubject').value =
       `[インシデント報告] ${model} ${unit} - ${prio} (${dt}) [${user}]`;
     document.getElementById('hiddenMessage').value = buildMessage();
-    return true;
+
+    form.action = url;
+    form.submit();
   }
 
   function saveDraft() {
