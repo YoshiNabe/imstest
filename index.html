@@ -34,16 +34,6 @@
       margin-top: 4px;
     }
 
-    /* User section */
-    .user-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      border-left: 4px solid #3b82f6;
-    }
-
     /* Section cards */
     .card {
       background: #fff;
@@ -230,27 +220,26 @@
     <input type="hidden" name="_subject" id="hiddenSubject">
     <input type="hidden" name="_body" id="hiddenMessage">
 
-    <!-- ユーザー名 -->
-    <div class="user-card">
-      <div class="fg">
-        <label for="userName">報告者（ユーザー名）<span class="req">*</span></label>
-        <select id="userName" required>
-          <option value="">-- 選択してください --</option>
-          <option>Rapidus A/W</option>
-          <option>Rapidus DJK</option>
-          <option>TOYOTA</option>
-          <option>KDDI</option>
-          <option>GIGAPHOTON</option>
-          <option>中外製薬</option>
-        </select>
-      </div>
-    </div>
-
     <!-- A 基本情報 -->
     <div class="card">
       <div class="card-header">
         <span class="badge badge-blue">A 基本情報</span>
         <span class="card-title">発生日時・場所・対象機器</span>
+      </div>
+
+      <div class="row1">
+        <div class="fg">
+          <label for="userName">ユーザー名 <span class="req">*</span></label>
+          <select id="userName" required>
+            <option value="">-- 選択してください --</option>
+            <option>Rapidus A/W</option>
+            <option>Rapidus DJK</option>
+            <option>TOYOTA</option>
+            <option>KDDI</option>
+            <option>GIGAPHOTON</option>
+            <option>中外製薬</option>
+          </select>
+        </div>
       </div>
 
       <div class="row2">
@@ -460,7 +449,7 @@
 <div id="toast"></div>
 
 <footer style="text-align:center;padding:16px 0 8px;font-size:11px;color:#bbb;">
-  ver. 2026-04-22 13:01
+  ver. 2026-04-22 13:04
 </footer>
 
 <script>
