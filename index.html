@@ -234,7 +234,7 @@
     <div class="user-card">
       <div class="fg">
         <label for="userName">報告者（ユーザー名）<span class="req">*</span></label>
-        <select id="userName" name="userName" required>
+        <select id="userName" required>
           <option value="">-- 選択してください --</option>
           <option>Rapidus A/W</option>
           <option>Rapidus DJK</option>
@@ -256,11 +256,11 @@
       <div class="row2">
         <div class="fg">
           <label for="occurrenceTime">発生日時 <span class="req">*</span></label>
-          <input type="datetime-local" id="occurrenceTime" name="occurrenceTime" required>
+          <input type="datetime-local" id="occurrenceTime" required>
         </div>
         <div class="fg">
           <label for="reportTime">報告日時 <span class="req">*</span></label>
-          <input type="datetime-local" id="reportTime" name="reportTime" required>
+          <input type="datetime-local" id="reportTime" required>
           <span class="hint">自動入力（変更可）</span>
         </div>
       </div>
@@ -268,11 +268,11 @@
       <div class="row2">
         <div class="fg">
           <label for="location">発生場所 <span class="req">*</span></label>
-          <input type="text" id="location" name="location" placeholder="例：第1工場 Aライン、倉庫B エリア3" required>
+          <input type="text" id="location" placeholder="例：第1工場 Aライン、倉庫B エリア3" required>
         </div>
         <div class="fg">
           <label for="frequency">発生頻度</label>
-          <select id="frequency" name="frequency">
+          <select id="frequency">
             <option value="">-- 選択してください --</option>
             <option>初回</option>
             <option>断続的（過去にも発生）</option>
@@ -285,7 +285,7 @@
       <div class="row3">
         <div class="fg">
           <label for="model">機種 <span class="req">*</span></label>
-          <select id="model" name="model" required>
+          <select id="model" required>
             <option value="">-- 選択 --</option>
             <option>WILL-FA</option>
             <option>WILL-SR</option>
@@ -296,11 +296,11 @@
         </div>
         <div class="fg">
           <label for="unitNumber">号機 <span class="req">*</span></label>
-          <input type="text" id="unitNumber" name="unitNumber" placeholder="例：#03、#07" required>
+          <input type="text" id="unitNumber" placeholder="例：#03、#07" required>
         </div>
         <div class="fg">
           <label for="errorCode">エラーコード / 種別</label>
-          <input type="text" id="errorCode" name="errorCode" placeholder="例：E-204、通信断">
+          <input type="text" id="errorCode" placeholder="例：E-204、通信断">
         </div>
       </div>
     </div>
@@ -315,7 +315,7 @@
       <div class="row2">
         <div class="fg">
           <label>優先度 <span class="req">*</span></label>
-          <input type="hidden" id="priority" name="priority">
+          <input type="hidden" id="priority">
           <div class="priority-row">
             <button type="button" class="prio-btn p1" data-val="P1" onclick="selectPriority(this)">P1<div class="sub">緊急</div></button>
             <button type="button" class="prio-btn p2" data-val="P2" onclick="selectPriority(this)">P2<div class="sub">高</div></button>
@@ -325,7 +325,7 @@
         </div>
         <div class="fg">
           <label for="impactScope">影響範囲 <span class="req">*</span></label>
-          <select id="impactScope" name="impactScope" required>
+          <select id="impactScope" required>
             <option value="">-- 選択してください --</option>
             <option>生産停止（全ライン）</option>
             <option>生産停止（一部ライン）</option>
@@ -340,7 +340,7 @@
       <div class="row2">
         <div class="fg">
           <label for="operationStatus">運用継続可否 <span class="req">*</span></label>
-          <select id="operationStatus" name="operationStatus" required>
+          <select id="operationStatus" required>
             <option value="">-- 選択してください --</option>
             <option>全機能使用不可</option>
             <option>一部機能のみ使用不可</option>
@@ -350,7 +350,7 @@
         </div>
         <div class="fg">
           <label for="deadline">対応期限（目標）</label>
-          <input type="datetime-local" id="deadline" name="deadline">
+          <input type="datetime-local" id="deadline">
           <span class="hint">SLAまたは顧客要求に基づく設定</span>
         </div>
       </div>
@@ -366,27 +366,27 @@
 
       <div class="fw-item fg">
         <label for="when5w">When（いつ）</label>
-        <input type="text" id="when5w" name="when5w" placeholder="発生タイミング・周期・継続時間（例：搬送動作中、夜間のみ）">
+        <input type="text" id="when5w" placeholder="発生タイミング・周期・継続時間（例：搬送動作中、夜間のみ）">
       </div>
       <div class="fw-item fg">
         <label for="where5w">Where（どこで）</label>
-        <input type="text" id="where5w" name="where5w" placeholder="具体的な場所・ルート・ゾーン（例：Aライン⇔充電ステーション間）">
+        <input type="text" id="where5w" placeholder="具体的な場所・ルート・ゾーン（例：Aライン⇔充電ステーション間）">
       </div>
       <div class="fw-item fg">
         <label for="who5w">Who（誰が）</label>
-        <input type="text" id="who5w" name="who5w" placeholder="対象の機器・担当者・関係チーム">
+        <input type="text" id="who5w" placeholder="対象の機器・担当者・関係チーム">
       </div>
       <div class="fw-item fg">
         <label for="what5w">What（何を）</label>
-        <input type="text" id="what5w" name="what5w" placeholder="対象の業務・動作・搬送物（例：空パレット搬送時）">
+        <input type="text" id="what5w" placeholder="対象の業務・動作・搬送物（例：空パレット搬送時）">
       </div>
       <div class="fw-item fg">
         <label for="why5w">Why（なぜ）</label>
-        <input type="text" id="why5w" name="why5w" placeholder="推定原因・背景・直前の操作（不明な場合は「不明」）">
+        <input type="text" id="why5w" placeholder="推定原因・背景・直前の操作（不明な場合は「不明」）">
       </div>
       <div class="fg">
         <label for="detail">事象の詳細（自由記述）<span class="req">*</span></label>
-        <textarea id="detail" name="detail" rows="4" placeholder="上記5Wを補足する内容、エラーメッセージ、目撃状況、再現手順など" required></textarea>
+        <textarea id="detail" rows="4" placeholder="上記5Wを補足する内容、エラーメッセージ、目撃状況、再現手順など" required></textarea>
       </div>
     </div>
 
@@ -400,14 +400,14 @@
       <div class="row1">
         <div class="fg">
           <label for="investigation">調査内容</label>
-          <textarea id="investigation" name="investigation" rows="3" placeholder="確認したログ・センサー値、試みた操作、確認済みの仮説など"></textarea>
+          <textarea id="investigation" rows="3" placeholder="確認したログ・センサー値、試みた操作、確認済みの仮説など"></textarea>
         </div>
       </div>
 
       <div class="row2">
         <div class="fg">
           <label for="reproducibility">再現性</label>
-          <select id="reproducibility" name="reproducibility">
+          <select id="reproducibility">
             <option value="">-- 選択してください --</option>
             <option>未確認</option>
             <option>再現手順あり</option>
@@ -417,7 +417,7 @@
         </div>
         <div class="fg">
           <label for="knownError">既知エラーとの一致</label>
-          <select id="knownError" name="knownError">
+          <select id="knownError">
             <option value="">-- 選択してください --</option>
             <option>類似事例あり</option>
             <option>既知エラー</option>
@@ -438,13 +438,13 @@
       <div class="row1">
         <div class="fg">
           <label for="actionRequest">依頼内容・アクション</label>
-          <textarea id="actionRequest" name="actionRequest" rows="3" placeholder="例：本日中に現地確認をお願いしたい。ファームウェアの確認と暫定対応（手動搬送への切り替え）を依頼。"></textarea>
+          <textarea id="actionRequest" rows="3" placeholder="例：本日中に現地確認をお願いしたい。ファームウェアの確認と暫定対応（手動搬送への切り替え）を依頼。"></textarea>
         </div>
       </div>
       <div class="row1">
         <div class="fg">
           <label for="notes">その他・特記事項</label>
-          <textarea id="notes" name="notes" rows="3" placeholder="顧客からの申し送り、関連チケット番号、添付資料の案内など"></textarea>
+          <textarea id="notes" rows="3" placeholder="顧客からの申し送り、関連チケット番号、添付資料の案内など"></textarea>
         </div>
       </div>
     </div>
