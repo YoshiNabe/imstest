@@ -211,7 +211,7 @@
 
   <div class="page-header">
     <h1>インシデント報告レコード</h1>
-    <p>Incident Report Record — ロボット搬送システム運用 <span style="color:#bbb;">(ver. 2026-04-22 13:07)</span></p>
+    <p>Incident Report Record — ロボット搬送システム運用 <span style="color:#bbb;">(ver. 2026-04-22 13:17)</span></p>
   </div>
 
   <form id="incidentForm" action="" method="POST" onsubmit="return prepareSubmit(event)">
@@ -495,17 +495,16 @@
     return `■ インシデント報告レコード
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-【報告者】${val('userName')}
-
 ━━ A. 基本情報 ━━━━━━━━━━━━━━━━━━━━━
 
-発生日時　　：${fmtDt(document.getElementById('occurrenceTime').value)}
-報告日時　　：${fmtDt(document.getElementById('reportTime').value)}
-発生場所　　：${val('location')}
-発生頻度　　：${val('frequency')}
-機種　　　　：${val('model')}
-号機　　　　：${val('unitNumber')}
-エラーコード：${val('errorCode')}
+ユーザー名　　：${val('userName')}
+発生日時　　　：${fmtDt(document.getElementById('occurrenceTime').value)}
+報告日時　　　：${fmtDt(document.getElementById('reportTime').value)}
+発生場所　　　：${val('location')}
+発生頻度　　　：${val('frequency')}
+機種　　　　　：${val('model')}
+号機　　　　　：${val('unitNumber')}
+エラーコード　：${val('errorCode')}
 
 ━━ B. 優先度・影響範囲 ━━━━━━━━━━━━━━━━
 
